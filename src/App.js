@@ -1,18 +1,52 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Station from './components/Station';
+import IconButton from 'material-ui/IconButton';
+import SwapHoriz from 'material-ui-icons/SwapHoriz';
 import './App.css';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      origin: '',
+      destination: '',
+    };
+  }
+
+  handleSwap = () => {
+    this.setState({
+      origin: this.state.destination,
+      destination: this.state.origin,
+    });
+  }
+
+  handleOnChangeStation = location => event => {
+    this.setState({ [location]: event.target.value });
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+        <header id="header">
+          <h1 className="title">Encuentra tu horario</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <main id="main">
+          <section className="user-actions">
+            <Station
+              location="origin"
+              value={this.state.origin}
+              onChange={this.handleOnChangeStation}
+            />
+            <IconButton className="swap" aria-label="Swap" onClick={this.handleSwap}>
+              <SwapHoriz />
+            </IconButton>
+            <Station
+              location="destination"
+              value={this.state.destination}
+              onChange={this.handleOnChangeStation}
+            />
+          </section>
+        </main>
       </div>
     );
   }
