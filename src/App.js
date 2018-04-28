@@ -20,8 +20,8 @@ class App extends Component {
     });
   }
 
-  handleOnChangeStation = location => event => {
-    this.setState({ [location]: event.target.value });
+  handleOnChangeStation = location => value => {
+    this.setState({ [location]: value });
   }
 
   render() {
@@ -30,28 +30,29 @@ class App extends Component {
         <header id="header">
           <h1 className="title">Encuentra tu horario</h1>
         </header>
-        <datalist id="stations">
-          <option value="Internet Explorer"></option>
-          <option value="Firefox"></option>
-          <option value="Google Chrome"></option>
-          <option value="Opera"></option>
-          <option value="Safari"></option>
-        </datalist>
-        <main id="main">
+        <main id="main" className="container">
           <section className="user-actions">
-            <Station
-              location="origin"
-              value={this.state.origin}
-              onChange={this.handleOnChangeStation}
-            />
-            <IconButton className="swap" aria-label="Swap" onClick={this.handleSwap}>
+            <div className="station-selector">
+              <Station
+                location="origin"
+                value={this.state.origin}
+                onChange={this.handleOnChangeStation('origin')}
+              />
+            </div>
+            <IconButton
+              className="swap"
+              aria-label="Swap"
+              onClick={this.handleSwap}
+            >
               <SwapHoriz />
             </IconButton>
-            <Station
-              location="destination"
-              value={this.state.destination}
-              onChange={this.handleOnChangeStation}
-            />
+            <div className="station-selector">
+              <Station
+                location="destination"
+                value={this.state.destination}
+                onChange={this.handleOnChangeStation('destination')}
+              />
+            </div>
           </section>
         </main>
       </div>

@@ -1,5 +1,6 @@
 #header {
   margin-top: 60px;
+  margin-bottom: 30px;
 }
 
 #header .title {
@@ -9,8 +10,15 @@
 .user-actions {
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
+.user-actions .station-selector {
+  flex-basis: 50%;
+  max-height: 34px;
+}
 .user-actions .swap {
+  flex-basis: 50px;
   margin: 0 15px;
 }
