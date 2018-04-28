@@ -30,6 +30,13 @@ class App extends Component {
         <header id="header">
           <h1 className="title">Encuentra tu horario</h1>
         </header>
+        <datalist id="stations">
+          <option value="Internet Explorer"></option>
+          <option value="Firefox"></option>
+          <option value="Google Chrome"></option>
+          <option value="Opera"></option>
+          <option value="Safari"></option>
+        </datalist>
         <main id="main">
           <section className="user-actions">
             <Station

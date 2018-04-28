@@ -28,6 +28,9 @@ class Station extends Component {
           label={this.state.labels[this.props.location]}
           value={this.props.value}
           onChange={this.props.onChange(this.props.location)}
+          inputProps={{
+            list: "stations",
+          }}
           InputProps={{
             endAdornment:
               <InputAdornment position="end">
