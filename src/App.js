@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Station from './components/Station';
+import Schedules from './components/Schedules';
 import IconButton from 'material-ui/IconButton';
 import SwapHoriz from 'material-ui-icons/SwapHoriz';
 import swal from 'sweetalert';
@@ -24,15 +25,28 @@ class App extends Component {
   }
 
   handleOnChangeStation = location => async value => {
-    await this.setState({ [location]: value });
-    this.triggerSchedulesLoading();
+    // same value cannot be selected for both origin & destination
+    if (location === 'origin' && this.state.destination === value) {
+      await this.setState({ origin: null });
+    } else if (location === 'destination' && this.state.origin === value) {
+      await this.setState({ destination: null });
+    } else {
+      // set the selected station
+      await this.setState({ [location]: value });
+      this.triggerSchedulesLoading();
+    }
+
+    if (this.state.origin === null || this.state.destination === null) {
+      // empty loaded schedules if any of stations is not present
+      this.setState({ schedules: [] });
+    }
   }
 
   triggerSchedulesLoading = async () => {
     const { origin, destination } = this.state;
     const API = process.env.REACT_APP_API;
 
-    if (origin === null || destination === null) {
+    if (origin === null || destination === null || origin === destination) {
       return;
     }
 
@@ -44,6 +58,12 @@ class App extends Component {
     } catch(e) {
       swal('Oops!', `Unexpected error ocurred: ${e}`, 'error');
       console.error(e);
+      return;
+    }
+
+    if (!Array.isArray(responseData)) {
+      swal('Oops!', 'Something went wrong when retrieving the schedule...', 'error');
+      return;
     }
 
     this.setState({ schedules: responseData });
@@ -78,6 +98,9 @@ class App extends Component {
                 onChange={this.handleOnChangeStation('destination')}
               />
             </div>
+          </section>
+          <section className="schedules-container">
+            <Schedules schedules={this.state.schedules} />
           </section>
         </main>
       </div>
