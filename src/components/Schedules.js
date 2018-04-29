@@ -9,6 +9,10 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
+  tableCell: {
+    textAlign: 'center',
+    padding: 7,
+  },
 });
 
 class Schedules extends Component {
@@ -20,20 +24,20 @@ class Schedules extends Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Línea</TableCell>
-              <TableCell numeric>Hora salida</TableCell>
-              <TableCell numeric>Hora llegada</TableCell>
-              <TableCell numeric>Duración</TableCell>
+              <TableCell className={classes.tableCell}>Línea</TableCell>
+              <TableCell className={classes.tableCell}>Hora salida</TableCell>
+              <TableCell className={classes.tableCell}>Hora llegada</TableCell>
+              <TableCell className={classes.tableCell}>Duración</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {this.props.schedules.map((s, i) => {
               return (
                 <TableRow key={i}>
-                  <TableCell>{s.line}</TableCell>
-                  <TableCell numeric>{s.departure}</TableCell>
-                  <TableCell numeric>{s.arrival}</TableCell>
-                  <TableCell numeric>--</TableCell>
+                  <TableCell className={classes.tableCell}>{s.line}</TableCell>
+                  <TableCell className={classes.tableCell}>{s.departure}</TableCell>
+                  <TableCell className={classes.tableCell}>{s.arrival}</TableCell>
+                  <TableCell className={classes.tableCell}>--</TableCell>
                 </TableRow>
               );
             })}
