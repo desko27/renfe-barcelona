@@ -37,7 +37,7 @@ class Schedules extends Component {
                   <TableCell className={classes.tableCell}>{s.line}</TableCell>
                   <TableCell className={classes.tableCell}>{s.departure}</TableCell>
                   <TableCell className={classes.tableCell}>{s.arrival}</TableCell>
-                  <TableCell className={classes.tableCell}>--</TableCell>
+                  <TableCell className={classes.tableCell}>{s.duration}</TableCell>
                 </TableRow>
               );
             })}

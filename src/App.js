@@ -4,6 +4,7 @@ import Schedules from './components/Schedules';
 import IconButton from 'material-ui/IconButton';
 import SwapHoriz from 'material-ui-icons/SwapHoriz';
 import swal from 'sweetalert';
+import moment from 'moment';
 import './App.css';
 
 class App extends Component {
@@ -65,6 +66,19 @@ class App extends Component {
       swal('Oops!', 'Something went wrong when retrieving the schedule...', 'error');
       return;
     }
+
+    // all right, inject durations & save response to state
+    responseData = responseData.map(item => {
+      const start = moment(`${moment().format('YYYY-MM-DD')} ${item.departure}`);
+      const end = moment(`${moment().format('YYYY-MM-DD')} ${item.arrival}`);
+      if (end.isBefore(start)) {
+        end.add(1, 'day');
+      }
+
+      const duration = moment.duration(end.diff(start));
+      const minutes = duration.asMinutes();
+      return { ...item, duration: `${minutes} min` };
+    });
 
     this.setState({ schedules: responseData });
   }
