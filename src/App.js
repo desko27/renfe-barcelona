@@ -8,8 +8,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      origin: '',
-      destination: '',
+      origin: null,
+      destination: null,
     };
   }
 
