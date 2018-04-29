@@ -224,7 +224,7 @@ class IntegrationReactSelect extends React.Component {
           inputComponent={SelectWrapped}
           value={this.props.value}
           onChange={this.handleChange('single')}
-          placeholder="Selecciona una estación"
+          placeholder={`Estación ${this.props.location === 'origin' ? 'origen' : 'desitno'}`}
           id="react-select-single"
           inputProps={{
             classes,
