@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Station from './components/Station';
 import IconButton from 'material-ui/IconButton';
 import SwapHoriz from 'material-ui-icons/SwapHoriz';
+import swal from 'sweetalert';
 import './App.css';
 
 class App extends Component {
@@ -10,18 +11,42 @@ class App extends Component {
     this.state = {
       origin: null,
       destination: null,
+      schedules: [],
     };
   }
 
-  handleSwap = () => {
-    this.setState({
+  handleSwap = async () => {
+    await this.setState({
       origin: this.state.destination,
       destination: this.state.origin,
     });
+    this.triggerSchedulesLoading();
   }
 
-  handleOnChangeStation = location => value => {
-    this.setState({ [location]: value });
+  handleOnChangeStation = location => async value => {
+    await this.setState({ [location]: value });
+    this.triggerSchedulesLoading();
+  }
+
+  triggerSchedulesLoading = async () => {
+    const { origin, destination } = this.state;
+    const API = process.env.REACT_APP_API;
+
+    if (origin === null || destination === null) {
+      return;
+    }
+
+    let responseData;
+
+    try {
+      const response = await fetch(`${API}/schedules/${origin}/${destination}`);
+      responseData = await response.json();
+    } catch(e) {
+      swal('Oops!', `Unexpected error ocurred: ${e}`, 'error');
+      console.error(e);
+    }
+
+    this.setState({ schedules: responseData });
   }
 
   render() {
