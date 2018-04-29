@@ -10,16 +10,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Chip from 'material-ui/Chip';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-
-const suggestions = [
-  { label: 'Castelldefels' },
-  { label: 'Passeig de Gracia' },
-  { label: 'Sants Estació' },
-  { label: 'Viladecans' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));
+import swal from 'sweetalert';
 
 class Option extends React.Component {
   handleClick = event => {
@@ -198,6 +189,24 @@ const styles = theme => ({
 });
 
 class IntegrationReactSelect extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      stations: [],
+    }
+  }
+
+  async componentWillMount() {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}/stations/${this.props.location}`);
+      const responseData = await response.json();
+      this.setState({ stations: responseData.map(s => ({ value: s.id, label: s.name })) });
+    } catch (e) {
+      swal('Oops!', `Unexpected error ocurred: ${e}`, 'error');
+      console.error(e);
+    }
+  }
+
   handleChange = name => value => {
     this.setState({
       [name]: value,
@@ -222,7 +231,7 @@ class IntegrationReactSelect extends React.Component {
             name: 'react-select-single',
             instanceId: 'react-select-single',
             simpleValue: true,
-            options: suggestions,
+            options: this.state.stations,
           }}
         />
       </div>
