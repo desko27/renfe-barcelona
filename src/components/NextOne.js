@@ -22,6 +22,10 @@ class NextOne extends Component {
           nextOne = s;
         }
       });
+
+      if (!found) {
+        willRender = false;
+      }
     }
 
     if (willRender) {
