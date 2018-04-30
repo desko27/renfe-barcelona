@@ -120,7 +120,7 @@ class App extends Component {
             <NextOne schedules={this.state.schedules} />
           </section>
           <section className="schedules-container">
-            <h1 className="title">Resto del día</h1>
+            <h1 className="title">Todos los horarios para hoy</h1>
             <Schedules schedules={this.state.schedules} />
           </section>
         </main>
