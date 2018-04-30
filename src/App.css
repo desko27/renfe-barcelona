@@ -3,12 +3,13 @@
 }
 
 #header {
-  margin-top: 60px;
-  margin-bottom: 30px;
 }
 
-#header .title {
+.title {
+  margin-top: 60px;
+  margin-bottom: 30px;
   text-align: center;
+  font-weight: 300;
 }
 
 .user-actions {

@@ -1,0 +1,15 @@
+.NextOne .nextone-box {
+  text-align: center;
+}
+
+.NextOne .nextone-box .label {
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-bottom: 3px;
+}
+
+.NextOne .nextone-box .value {
+  font-size: 37px;
+  font-weight: 700;
+}

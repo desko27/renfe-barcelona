@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Station from './components/Station';
 import Schedules from './components/Schedules';
+import NextOne from './components/NextOne';
 import IconButton from 'material-ui/IconButton';
 import SwapHoriz from 'material-ui-icons/SwapHoriz';
 import swal from 'sweetalert';
@@ -39,7 +40,7 @@ class App extends Component {
 
     if (this.state.origin === null || this.state.destination === null) {
       // empty loaded schedules if any of stations is not present
-      this.setState({ schedules: [] });
+      await this.setState({ schedules: [] });
     }
   }
 
@@ -80,40 +81,46 @@ class App extends Component {
       return { ...item, duration: `${minutes} min` };
     });
 
-    this.setState({ schedules: responseData });
+    await this.setState({ schedules: responseData });
   }
 
   render() {
     return (
       <div className="App">
-        <header id="header">
-          <h1 className="title">Encuentra tu horario</h1>
-        </header>
+        <header id="header"></header>
         <main id="main" className="container">
-          <section className="user-actions">
-            <div className="station-selector">
-              <Station
-                location="origin"
-                value={this.state.origin}
-                onChange={this.handleOnChangeStation('origin')}
-              />
+          <div className="user-actions-container">
+            <h1 className="title">Descubre a qué hora sale tu tren</h1>
+            <div className="user-actions">
+              <div className="station-selector">
+                <Station
+                  location="origin"
+                  value={this.state.origin}
+                  onChange={this.handleOnChangeStation('origin')}
+                />
+              </div>
+              <IconButton
+                className="swap"
+                aria-label="Swap"
+                onClick={this.handleSwap}
+              >
+                <SwapHoriz />
+              </IconButton>
+              <div className="station-selector">
+                <Station
+                  location="destination"
+                  value={this.state.destination}
+                  onChange={this.handleOnChangeStation('destination')}
+                />
+              </div>
             </div>
-            <IconButton
-              className="swap"
-              aria-label="Swap"
-              onClick={this.handleSwap}
-            >
-              <SwapHoriz />
-            </IconButton>
-            <div className="station-selector">
-              <Station
-                location="destination"
-                value={this.state.destination}
-                onChange={this.handleOnChangeStation('destination')}
-              />
-            </div>
+          </div>
+          <section className="nextone-container">
+            <h1 className="title">Próximo tren</h1>
+            <NextOne schedules={this.state.schedules} />
           </section>
           <section className="schedules-container">
+            <h1 className="title">Resto del día</h1>
             <Schedules schedules={this.state.schedules} />
           </section>
         </main>
